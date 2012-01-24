@@ -1,51 +1,48 @@
 <!DOCTYPE html>
 <head>
-<meta charset="utf-8">
-<title>Pattern Primer</title>
-<link rel="stylesheet" href="global.css">
-<style>
-.pattern {
-    clear: both;
-    overflow: hidden;
-}
-.pattern .display {
-    width: 65%;
-    float: left;
-}
-.pattern .source {
-    width: 30%;
-    float: right;
-}
-.pattern .source textarea {
-    width: 90%;
-}
-</style>
+  <meta charset="utf-8">
+  <title>Pattern Primer</title>
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/inconsolata.css">
+  <link rel="stylesheet" href="css/solarized_dark.css">
+  <link rel="stylesheet" href="css/patterns.css">
 </head>
 <body>
 
 <?php
-$files = array();
-$handle=opendir('patterns');
-while (false !== ($file = readdir($handle))):
-    if(stristr($file,'.html')):
+  $files = array();
+  $handle=opendir('patterns');
+  while (false !== ($file = readdir($handle))) {
+    if(stristr($file,'.html')) {
         $files[] = $file;
-    endif;
-endwhile;
-sort($files);
-foreach ($files as $file):
+    }
+  }
+  
+  sort($files);
+  $section = '';
+  foreach ($files as $file) {
+    $thisSection = stristr( $file , '-', true );
+    if ($thisSection != $section) {
+      $section = $thisSection;
+      echo '<h1>'.ucwords(stristr( $file , '-', true )).'</h1>';
+    }
     echo '<div class="pattern">';
     echo '<div class="display">';
     include('patterns/'.$file);
     echo '</div>';
     echo '<div class="source">';
-    echo '<textarea rows="6" cols="30">';
+    // echo '<textarea rows="6" cols="30" class="html">';
+    echo '<pre><code class="html">';
     echo htmlspecialchars(file_get_contents('patterns/'.$file));
-    echo '</textarea>';
+    echo '</code></pre>';
+    // echo '</textarea>';
     echo '<p><a href="patterns/'.$file.'">'.$file.'</a></p>';
     echo '</div>';
     echo '</div>';
-endforeach;
+  }
 ?>
 
+<script src="js/highlight.js"></script>
+<script src="js/patterns.js"></script>
 </body>
 </html>

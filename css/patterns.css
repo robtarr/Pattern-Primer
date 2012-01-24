@@ -1,0 +1,20 @@
+.pattern {
+    clear: both;
+    overflow: hidden;
+}
+.pattern .display {
+    width: 65%;
+    float: left;
+}
+.pattern .source {
+    width: 30%;
+    float: right;
+}
+.pattern .source textarea {
+    width: 90%;
+}
+code {
+  font-family: InconsolataMedium, Courier, 'sans-serif';
+  font-size: 0.7em;
+  line-height: 1.4em;
+}
